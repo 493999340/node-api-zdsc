@@ -1,3 +1,5 @@
+// bcrypt密码加密，抽离中间件的好处就是一旦换加密方式就直接修改中间件即可，单一职责，从逻辑上对代码进行解耦
+const bcrypt = require("bcryptjs");
 const { getUserInfo } = require("../service/user.service");
 const {
   userFormatError,
@@ -30,4 +32,12 @@ const verifyUser = async (ctx, next) => {
   }
   await next();
 };
-module.exports = { userValidator, verifyUser };
+const cryptPassword = async (ctx, next) => {
+  const { password } = ctx.request.body;
+  const salt = bcrypt.genSaltSync(10);
+  // 对传递过来的密码进行加密 hash保存的是密文
+  const hash = bcrypt.hashSync("B4c0//", salt);
+  ctx.request.body.password = hash;
+  await next();
+};
+module.exports = { userValidator, verifyUser, cryptPassword };
