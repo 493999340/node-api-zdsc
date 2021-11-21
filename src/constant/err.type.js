@@ -1,4 +1,5 @@
 module.exports = {
+  // 用户模块10XXX
   userFormatError: {
     code: "10001",
     message: "密码或用户名为空",
@@ -27,6 +28,17 @@ module.exports = {
   invalidPassword: {
     code: "10006",
     message: "用户密码错误",
+    result: "",
+  },
+  // 授权模块 101XXX
+  tokenExpiredError: {
+    code: "10101",
+    message: "token 已过期",
+    result: "",
+  },
+  invalidToken: {
+    code: "10102",
+    message: "无效的token",
     result: "",
   },
 };
